@@ -25,6 +25,9 @@
   "files": [
     "index.js"
   ],
+  "directories": {
+    "lib": "./lib"
+  },
   "dependencies": {
     "httpntlm": "^1.7.5",
     "moment": "^2.18.1",
