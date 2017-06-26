@@ -227,7 +227,7 @@ var dataSource = await ssrs.reportService.createDataSource(dataSourceName, folde
 - `CredentialRetrieval`: Prompt, Store, Integrated, None
 - `WindowsCredentials`: indicates whether the report server passes user-provided or stored credentials as Windows credentials when it connects to a data source.
 - `ImpersonateUser`: indicates whether the report server tries to impersonate a user by using stored credentials.
-- `ImpersonateUserSpecified`: true if the `ImpersonateUser` property should be omitted from the Web service call; otherwise, false. The default is false.   catalog=siefuace',
+- `ImpersonateUserSpecified`: true if the `ImpersonateUser` property should be omitted from the Web service call; otherwise, false. The default is false.
 - `Prompt`: prompt that the report server displays to the user when it prompts for credentials.    
 - `UserName`: auth
 - `Password`: auth    
@@ -253,7 +253,7 @@ Usually used for creating images
 var resurce = await ssrs.reportService.createResource(path, fileContents, mimeType);
 ```
 
-### Set item data sources
+### Get item data sources
 
 ```js
 var references = await ssrs.reportService.getItemDataSources(itemPath);
@@ -424,12 +424,12 @@ var status = await ssrs.upload(reportPath, newFolderName, options)
 
 ### Upload reports files
 
-Read firectory and upload reports
+Read file directory and upload reports
 
 ```js
 var status = await ssrs.uploadFiles(sourcePath, targetPath, options)
 ```
-- `sourcePath`: path from where to read files
+- `sourcePath`: root folder from where to read files
 - `targetPath`: root folder path where to upload, if not specified `sourcePath` is used
 - `options`: additional properties object, optional
   - `deleteReports`: delete reports before upload, default false
