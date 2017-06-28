@@ -416,7 +416,7 @@ var fileList = await ssrs.download(reportPath)
 Upload single item (report/datasource/image) or entire folder structure to reporting services 
 
 ```js
-var status = await ssrs.upload(reportPath, newFolderName, options)
+var warrnings = await ssrs.upload(reportPath, newFolderName, options)
 ```
 - `reportPath`: root folder path where to upload
 - `newFolderName`: new name for root folder when uploaded
@@ -427,10 +427,29 @@ var status = await ssrs.upload(reportPath, newFolderName, options)
 Read file directory and upload reports
 
 ```js
-var status = await ssrs.uploadFiles(sourcePath, targetPath, options)
+var warrnings = await ssrs.uploadFiles(path [, targetPath] [, options]);
+
+var warrnings = await ssrs.uploadFiles('.path/to/root/directory', '/newReportFolderName', {
+  deleteReports: false,
+  overrite: false,
+  fixDataSourceReference: false,
+  auth: {
+    myDataSourceName: {
+      connectstring: 'data source=<server>\<instance>; initial catalog=<dbName>',
+      userName: '',
+      password: ''
+    }
+    mySecondDataSourceName: {
+      connectstring: 'data source=<server>\<instance>; initial catalog=<dbName>',
+      userName: '',
+      password: ''
+    }
+  }
+}});
+
 ```
-- `sourcePath`: root folder from where to read files
-- `targetPath`: root folder path where to upload, if not specified `sourcePath` is used
+- `path`: root folder from where to read files
+- `targetPath`: root folder path where to upload, if not specified last folder name from `path` is used
 - `options`: additional properties object, optional
   - `deleteReports`: delete reports before upload, default false
   - `overrite`: overrites reports and datasources on upload, default true
