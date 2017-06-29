@@ -79,10 +79,10 @@ var re = await ssrs.reportExecution.start(url/serverConfig, auth[, security]);
 
 #### Url/serverConfig
 
-The `url/serverConfig` argument accepts a string url or aserver config: 
+The `url/serverConfig` argument accepts a string url or a config object: 
 ```js
 var url = 'http(s)://<serverName>:<port>/ReportServer_<sqlInstance>',
-var server = {
+var config = {
     server: 'server',
     instance: 'serverInstance',
     isHttps: false, // optional
@@ -100,7 +100,7 @@ var server = {
 #### Options
 
 - `rootFolder`: base folder added to `reportPath` parameters, default '/'
-- `cache`: specify whether to cache reports, default true 
+- `cache`: specify whether to cache report list, by default hidden reports are not kept, default true 
 - `useRs2010`: specify witch version of wsdl should client use (2010/2012), default true
 
 #### Security
