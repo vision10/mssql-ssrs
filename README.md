@@ -371,6 +371,9 @@ Get report list from cache, if path is not found in cache it will be download an
 var reportList = await ssrs.getReportList(reportPath, forceRefresh)
 ```
 
+- if `reportPath` is not present of is the same as rootFolder for reports entire cache is returned
+- `forceRefresh` force a recache, if `reportPath` is not present `rootFolder` is used
+
 ### Cache report list
 
 ```js
