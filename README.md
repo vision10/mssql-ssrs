@@ -29,6 +29,8 @@
   - [delete item](#delete-item)
   - [get item datasources](#get-item-data-sources)
   - [set item datasources](#set-item-data-sources)
+  - [get item references](#get-item-references)
+  - [set item references](#set-item-references)
   - [create resource](#create-resource)
 - [Report Execution](#soap-headers)
   - [get report execution client](#get-report-execution-client)
@@ -38,10 +40,6 @@
   - [run report by url](#run-report-by-url)
 - [Soap](#client)
   - [create client](#create-client)
-  - [get root folder](#get-root-folder)
-  - [set root folder](#set-root-folder)
-  - [get report server url](#get-report-server-url)
-  - [set report server url](#set-report-server-url)
 - [Report, general](#Report,-general)
   - [get report list](#get-report-list)
   - [cache report list](#cache-report-list)
@@ -50,6 +48,7 @@
   - [clear cached reports](#clear-cached-reports)
   - [upload reports](#upload-reports)
   - [download reports](#download-reports)
+  - [fix data source reference](#fix-data-source-reference)
 - [Contributors](#contributors)
 
 
@@ -268,6 +267,24 @@ var references = await ssrs.reportService.setItemDataSources(itemPath, dataSourc
 - `itemPath`: path of the report including the file name
 - `dataSources`: object of dataSourceName: newValue type.
 
+### Get item references
+
+```js
+var references = await ssrs.reportService.getItemReferences(itemPath, referenceType);
+```
+- `itemPath`: path of the report including the file name
+- `referenceType`: 'DataSource'|'DataSet'...
+
+### Set item references
+
+```js
+var refs = { 'DataSourceName': '/path/DataSourceName' };
+var refs = [{ Name: 'DataSourceName': Reference: '/path/DataSourceName' }];
+var references = await ssrs.reportService.setItemReferences(itemPath, refs);
+```
+- `itemPath`: path of the report including the file name
+- `refs`: array of objects with name and reference paths
+
 ## Report Execution
     
 ### Get report execution client
@@ -323,6 +340,15 @@ var report = await ssrs.reportExecution.getReportByUrl(reportPath, fileType, par
 ```
 - `parameters` can be an object with name, value atributes or instance of `ReportParameterInfo` objects
 
+### Fix Data Source Reference
+
+```js
+var references = await ssrs.report.fixDataSourceReference(reportPath, dataSourcePath);
+```
+- `reportPath`: path to reports
+- `dataSourcePath`: path to data source
+
+
 ## soap 
 
 ### Create client
@@ -331,34 +357,6 @@ Creates [soap clients](https://github.com/vpulim/node-soap#soapcreateclienturl-o
 
 ```js
 var client = await ssrs.soap.createClient(url, auth[, security])
-```
-
-### Set root folder
-
-Set a root folder for report service and report execution
-
-```js
-await ssrs.soap.setRootFolder(path)
-```
-
-### Get root folder
-
-Get root folder set for report service and report execution
-
-```js
-var rootFolder = await ssrs.soap.getRootFolder()
-```
-
-### Set report server url
-
-```js
-await ssrs.soap.setServerUrl(url/config)
-```
-
-### Get report server url
-
-```js
-var url = await ssrs.soap.getServerUrl()
 ```
 
 ## Report, general 
@@ -433,6 +431,7 @@ Read file directory and upload reports
 var warrnings = await ssrs.uploadFiles(path [, targetPath] [, options]);
 
 var warrnings = await ssrs.uploadFiles('.path/to/root/directory', '/newReportFolderName', {
+  debug: true,
   deleteReports: false,
   overrite: false,
   fixDataSourceReference: false,
@@ -443,6 +442,7 @@ var warrnings = await ssrs.uploadFiles('.path/to/root/directory', '/newReportFol
       password: ''
     }
     mySecondDataSourceName: {
+      windowsCredentials: true,
       connectstring: 'data source=<server>\<instance>; initial catalog=<dbName>',
       userName: '',
       password: ''
