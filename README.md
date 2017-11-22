@@ -63,17 +63,21 @@ Install with [npm](http://github.com/isaacs/npm):
 ## Usage
 
 MSSQL has 2 parts for reporting services:
-- report service for interogating reports 
-- report execution for rendering reports
+- report service for report management
+- report execution for report rendering
 
 ```js
 var ssrs = require('mssql-ssrs');
 
 // start both services (reportService, reportExecution)
-await ssrs.start(url/serverConfig, auth[, options][, security]);
-// or start separate
-var rs = await ssrs.reportService.start(url/serverConfig, auth[, options][, security]);
-var re = await ssrs.reportExecution.start(url/serverConfig, auth[, security]);
+await ssrs.start(url/serverConfig, auth [, options] [, security]);
+```
+
+or start them separately
+
+```js
+var rs = await ssrs.reportService.start(url, auth [, security] [, useRs2012]);
+var re = await ssrs.reportExecution.start(url, auth [, security]);
 ```
 
 #### Url/serverConfig
@@ -82,7 +86,7 @@ The `url/serverConfig` argument accepts a string url or a config object:
 ```js
 var url = 'http(s)://<serverName>:<port>/ReportServer_<sqlInstance>',
 var config = {
-    server: 'server',
+    server: 'serverName',
     instance: 'serverInstance',
     isHttps: false, // optional
     port: '80', // optional
@@ -100,7 +104,7 @@ var config = {
 
 - `rootFolder`: base folder added to `reportPath` parameters, default '/'
 - `cache`: specify whether to cache report list, by default hidden reports are not kept, default true 
-- `useRs2010`: specify witch version of wsdl should client use (2010/2012), default true
+- `useRs2012`: specify witch version of wsdl should client use (2010/2012), default uses 2010
 
 #### Security
 

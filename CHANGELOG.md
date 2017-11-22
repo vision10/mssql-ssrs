@@ -12,3 +12,12 @@
 - restricted `getServerUrl`, `setServerUrl`, `getRootFolder`, `setRootFolder`, 
     - not exported outside the package
 - documentation updates
+
+### v0.3.0
+
+- documentation updates
+- option `useRs2010` on reportService start function has been changed to `useRs2012`
+    - still defaults to using 2010
+- fixed issue with other types of security than ntlm
+    - basic security works for now
+    - others will be added later
