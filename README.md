@@ -7,9 +7,9 @@
 
 - [Install](#install)
 - [Usage](#Usage)
-  - [Url/serverConfig](#url/serverConfig)  
-  - [Auth](#auth)  
-  - [Options](#options)  
+  - [Url/serverConfig/path](#url/serverConfig/path)  
+  - [Soap config](#soap-config)  
+  - [Report service options](#report-service-options)  
   - [Security](#security)  
 - [Report Service](#Report-Service)
   - [report service client](#report-service-client)
@@ -40,6 +40,7 @@
   - [run report by url](#run-report-by-url)
 - [Soap](#client)
   - [create client](#create-client)
+  - [security](#security)
 - [Report, general](#Report,-general)
   - [get report list](#get-report-list)
   - [cache report list](#cache-report-list)
@@ -70,19 +71,19 @@ MSSQL has 2 parts for reporting services:
 var ssrs = require('mssql-ssrs');
 
 // start both services (reportService, reportExecution)
-await ssrs.start(url/serverConfig, auth [, options] [, security]);
+await ssrs.start(url/serverConfig/path, config [, options] [, security]);
 ```
 
 or start them separately
 
 ```js
-var rs = await ssrs.reportService.start(url, auth [, security] [, useRs2012]);
-var re = await ssrs.reportExecution.start(url, auth [, security]);
+var rs = await ssrs.reportService.start(url/Path, config [, security]);
+var re = await ssrs.reportExecution.start(url/Path, config [, security]);
 ```
 
-#### Url/serverConfig
+#### Url/serverConfig/path
 
-The `url/serverConfig` argument accepts a string url or a config object: 
+The `url/serverConfig/path` argument accepts a string url, config object or a system file path: 
 ```js
 var url = 'http(s)://<serverName>:<port>/ReportServer_<sqlInstance>',
 var config = {
@@ -93,14 +94,16 @@ var config = {
 };
 ```
 
-#### Auth
+#### Soap Config
 
+[soap config](https://www.npmjs.com/package/soap#options)
+also includes directly on config or on config.wsdl_options
 - `username`: required
 - `password`: required
 - `workstation`: optional
 - `domain`: optional
 
-#### Options
+#### Report Service Options
 
 - `rootFolder`: base folder added to `reportPath` parameters, default '/'
 - `cache`: specify whether to cache report list, by default hidden reports are not kept, default true 
@@ -108,10 +111,19 @@ var config = {
 
 #### Security
 
-More information on types of security (default ntml) use [soap security](https://github.com/vpulim/node-soap#security)
+More information on types of security see [soap security](https://github.com/vpulim/node-soap#security)
+Defaults to ntml
 
+Ex for basic security
 ```js
- var security = new ssrs.security.BasicAuthSecurity('username', 'password'));
+    var config = { username: username, password: password };
+    await ssrs.start(url, config, null, 'basic');
+    // or
+    var wsdl_headers = {};
+    var security = new ssrs.soap.security.BasicAuthSecurity(config.username, config.password);
+    security.addHeaders(wsdl_headers);
+    //                      for initial client creation      to set security on client
+    await ssrs.start(url, { wsdl_headers: wsdl_headers }, null, security);
 ```
 
 ## Report Service
@@ -361,6 +373,14 @@ Creates [soap clients](https://github.com/vpulim/node-soap#soapcreateclienturl-o
 
 ```js
 var client = await ssrs.soap.createClient(url, auth[, security])
+```
+
+### Security
+
+[soap security](https://www.npmjs.com/package/soap#security)
+
+```js
+var client = await ssrs.soap.security.BasicAuthSecurity('username', 'password')
 ```
 
 ## Report, general 

@@ -1,6 +1,6 @@
 {
   "name": "mssql-ssrs",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "Promise based api for MSSQL Reporting Services with ntlm, custom security",
   "author": "Sorin Muresan <sorinm025@gmail.com>",
   "keywords": [
@@ -14,9 +14,6 @@
     "type": "git",
     "url": "https://github.com/vision10/mssql-ssrs.git"
   },
-  "bugs": {
-    "url": ""
-  },
   "license": "MIT",
   "engines": {
     "node": ">= 7"
@@ -25,12 +22,13 @@
   "directories": {
     "lib": "./lib"
   },
-  "dependencies": {
-    "httpntlm": "^1.7.5",
-    "moment": "^2.18.1",
-    "soap-ntlm-2": "^0.9.4"
-  },
   "scripts": {
     "start": "node index.js"
+  },
+  "dependencies": {
+    "httpntlm": "^1.7.5",
+    "lodash": "^4.17.5",
+    "moment": "^2.21.0",
+    "soap": "^0.23.0"
   }
 }

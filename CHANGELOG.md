@@ -19,5 +19,13 @@
 - option `useRs2010` on reportService start function has been changed to `useRs2012`
     - still defaults to using 2010
 - fixed issue with other types of security than ntlm
-    - basic security works for now
-    - others will be added later
+    - suport for basic security
+
+### v1.0.0
+
+- documentation update
+- replace custom soap package with original
+    - default to ntlm request, does not override request if othes security is passed
+    - auth option changed to [soap config](https://www.npmjs.com/package/soap#options)
+- export entire original soap not just custom `createClient` and `security`
+- other small improvements
