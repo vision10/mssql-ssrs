@@ -1,8 +1,33 @@
 ## Change Log
 
-### v0.1.0 first release
+### v1.1.0
 
-### v0.1.0 - v0.1.11 bug fix and documentation
+- documentation update
+- added `readFiles`
+- `upload` and `uploadFiles` options changed
+    - `deleteReports` option changed to `deleteExistingItems`
+    - `auth` option changed to `dataSourceOptions`
+    - removed `debug` option 
+    - added `logger` object with `log` and `warn` functions, or boolean(outputs to console)
+    - added `exclude` array for `uploadFiles`, can exclude by name, extension, path
+- added `log` parameter to `fixDataSourceReference` 
+
+### v1.0.0
+
+- documentation update
+- replace custom soap package with original
+    - default to ntlm request, does not override request if othes security is passed
+    - auth option changed to [soap config](https://www.npmjs.com/package/soap#options)
+- export entire original soap not just custom `createClient` and `security`
+- other small improvements
+
+### v0.3.0
+
+- documentation updates
+- option `useRs2010` on reportService start function has been changed to `useRs2012`
+    - still defaults to using 2010
+- fixed issue with other types of security than ntlm
+    - suport for basic security
 
 ### v0.2.0 
 
@@ -13,19 +38,6 @@
     - not exported outside the package
 - documentation updates
 
-### v0.3.0
+### v0.1.0 - v0.1.11 bug fix and documentation
 
-- documentation updates
-- option `useRs2010` on reportService start function has been changed to `useRs2012`
-    - still defaults to using 2010
-- fixed issue with other types of security than ntlm
-    - suport for basic security
-
-### v1.0.0
-
-- documentation update
-- replace custom soap package with original
-    - default to ntlm request, does not override request if othes security is passed
-    - auth option changed to [soap config](https://www.npmjs.com/package/soap#options)
-- export entire original soap not just custom `createClient` and `security`
-- other small improvements
+### v0.1.0 first release

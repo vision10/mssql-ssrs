@@ -47,6 +47,7 @@
   - [create a copy of a report](#create-a-copy-of-a-report)
   - [create link for report builder for specified report ](#create-link-for-report-builder-for-specified-report)
   - [clear cached reports](#clear-cached-reports)
+  - [read reports folder](#read-reports-folder)
   - [upload reports](#upload-reports)
   - [download reports](#download-reports)
   - [fix data source reference](#fix-data-source-reference)
@@ -359,10 +360,14 @@ var report = await ssrs.reportExecution.getReportByUrl(reportPath, fileType, par
 ### Fix Data Source Reference
 
 ```js
-var references = await ssrs.report.fixDataSourceReference(reportPath, dataSourcePath);
+var references = await ssrs.report.fixDataSourceReference(reportPath, dataSourcePath, logger);
 ```
 - `reportPath`: path to reports
 - `dataSourcePath`: path to data source
+- `log`: boolean, outputs to console
+- `log`: object
+  - `log`: log messages function
+  - `warn`: log warrning/error messages function
 
 
 ## soap 
@@ -436,15 +441,24 @@ var fileList = await ssrs.download(reportPath)
 
 - `reportPath`: string|Array of strings path for base folders in report service from where to create definitions.
 
-### Upload reports
-
-Upload single item (report/datasource/image) or entire folder structure to reporting services 
+### Read reports folder
 
 ```js
-var warrnings = await ssrs.upload(reportPath, newFolderName, options)
+var result = await ssrs.readFiles(filePath, exclude, noDefinitions);
 ```
-- `reportPath`: root folder path where to upload
-- `newFolderName`: new name for root folder when uploaded
+- `filePath`: path to folder to read
+- `exclude`: array of strings to exclude specified files paths, names or extensions
+- `noDefinitions`: does not read file content(definition)
+
+### Upload reports
+
+Upload items (report/datasource/image) or entire folder structure to reporting services 
+
+```js
+var warrnings = await ssrs.upload(filePath, reportPath, options)
+```
+- `filePath`: root folder path where to read files
+- `reportPath`: report path where to upload files
 - `options` for `upload` and `uploadFiles` are the same
 
 ### Upload reports files
@@ -452,43 +466,53 @@ var warrnings = await ssrs.upload(reportPath, newFolderName, options)
 Read file directory and upload reports
 
 ```js
-var warrnings = await ssrs.uploadFiles(path [, targetPath] [, options]);
+var warrnings = await ssrs.uploadFiles(filePath [, reportPath] [, options]);
 
 var warrnings = await ssrs.uploadFiles('.path/to/root/directory', '/newReportFolderName', {
-  debug: true,
-  deleteReports: false,
-  overrite: false,
+  deleteExistingItems: false,
+  overwrite: false,
+  exclude: ['folderName', '.extension', '/path/to/file.rdl'],
   fixDataSourceReference: false,
-  auth: {
+  dataSourceFirst: false,
+  dataSourceOptions: {
     myDataSourceName: {
-      connectstring: 'data source=<server>\<instance>; initial catalog=<dbName>',
-      userName: '',
-      password: ''
-    }
+      ConnectString: 'data source=<server>\<instance>; initial catalog=<dbName>',
+      UserName: '',
+      Password: ''
+    },
     mySecondDataSourceName: {
-      windowsCredentials: true,
-      connectstring: 'data source=<server>\<instance>; initial catalog=<dbName>',
-      userName: '',
-      password: ''
+      WindowsCredentials: true,
+      ConnectString: 'data source=<server>\<instance>; initial catalog=<dbName>',
+      UserName: '',
+      Password: ''
     }
+  },
+  logger: true || {
+    log: function (msg) { console.log(msg) },
+    warn: function (msg) { console.warn(msg) }
   }
 }});
 
 ```
-- `path`: root folder from where to read files
-- `targetPath`: root folder path where to upload, if not specified last folder name from `path` is used
+- `filePath`: root folder from where to read files
+- `reportPath`: report path where to upload, if not specified last folder name from `filePath` is used
 - `options`: additional properties object, optional
-  - `deleteReports`: delete reports before upload, default false
-  - `overrite`: overrites reports and datasources on upload, default true
+  - `exclude`: array of strings to exclude specified files paths, names or extensions
+  - `overwrite`: overrites reports and datasources on upload, default true
+  - `deleteExistingItems`: delete before upload, default false
   - `fixDataSourceReference`: fix uploaded reports datasource references with uploaded datasources, default true 
-  - `auth`: each dataSourceName and its connection properties
+  - `dataSourceOptions`: each dataSourceName and its connection properties
     - `dataSourceName`: 
       - `connectstring`: connection string for data source
       - `userName`: userName for data source
       - `password`: password for data source
+      - name, prompt, security, extension type is determined from the .rds and dataSourceOptions file      
+  - `logger`: boolean, outputs to console
+  - `logger`: object
+    - `log`: log messages function
+    - `warn`: log warrning/error messages function
 
-- name, prompt, security, extension type is determined from the .rds file
-
+  
 ## Contributors
 
  * Author: [vision10](https://github.com/vision10)
