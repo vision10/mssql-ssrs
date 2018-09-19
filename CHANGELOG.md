@@ -1,5 +1,11 @@
 ## Change Log
 
+### v1.2.0
+
+- modified `download` returned result
+- fixed some minor issues with `getReportByUrl`
+- exported `setServerUrl`
+
 ### v1.1.0
 
 - documentation update
