@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.2.1
+
+- packages update 
+
 ### v1.2.0
 
 - modified `download` returned result
