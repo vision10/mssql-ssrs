@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.2.2 - v1.2.4
+
+- bug fix
+
 ### v1.2.1
 
 - packages update 
