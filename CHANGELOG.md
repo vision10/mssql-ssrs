@@ -1,5 +1,11 @@
 ## Change Log
 
+### v1.3.0
+
+- consistent parameters for all start functions `report.start`, `reportService.start` and `reportExecution.start` 
+- documentation updates
+- minor buxfix
+
 ### v1.2.2 - v1.2.4
 
 - bug fix

@@ -72,14 +72,14 @@ MSSQL has 2 parts for reporting services:
 var ssrs = require('mssql-ssrs');
 
 // start both services (reportService, reportExecution)
-await ssrs.start(url/serverConfig/path, config [, options] [, security]);
+await ssrs.start(url/path/serverConfig, soapConfig [, options] [, security]);
 ```
 
 or start them separately
 
 ```js
-var rs = await ssrs.reportService.start(url/Path, config [, security]);
-var re = await ssrs.reportExecution.start(url/Path, config [, security]);
+var rs = await ssrs.reportService.start(url/Path/serverConfig, soapConfig [, options] [, security]);
+var re = await ssrs.reportExecution.start(url/Path/serverConfig, soapConfig [, options] [, security]);
 ```
 
 #### Url/serverConfig/path
@@ -87,7 +87,7 @@ var re = await ssrs.reportExecution.start(url/Path, config [, security]);
 The `url/serverConfig/path` argument accepts a string url, config object or a system file path: 
 ```js
 var url = 'http(s)://<serverName>:<port>/ReportServer_<sqlInstance>',
-var config = {
+var serverConfig = {
     server: 'serverName',
     instance: 'serverInstance',
     isHttps: false, // optional
@@ -266,7 +266,7 @@ await ssrs.reportService.deleteItem(path)
 Usually used for creating images
 
 ```js
-var resurce = await ssrs.reportService.createResource(path, fileContents, mimeType);
+var resurce = await ssrs.reportService.createResource(name, path, fileContents, overwrite, mimeType);
 ```
 
 ### Get item data sources
@@ -344,6 +344,8 @@ var report = await ssrs.reportExecution.getReport(reportPath, fileType, paramete
 
 ### Run report by url
 
+No need to use `start` auth is used for every request but `setServerUrl` is necessary
+
 ```js
 // reportPath, fileType, parameters like getReport
 // must provide authentication each time
@@ -364,7 +366,9 @@ var references = await ssrs.report.fixDataSourceReference(reportPath, dataSource
 ```
 - `reportPath`: path to reports
 - `dataSourcePath`: path to data source
+
 - `log`: boolean, outputs to console
+or
 - `log`: object
   - `log`: log messages function
   - `warn`: log warrning/error messages function
