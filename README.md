@@ -473,11 +473,11 @@ Read file directory and upload reports
 var warrnings = await ssrs.uploadFiles(filePath [, reportPath] [, options]);
 
 var warrnings = await ssrs.uploadFiles('.path/to/root/directory', '/newReportFolderName', {
-  deleteExistingItems: false,
   overwrite: false,
-  exclude: ['folderName', '.extension', '/path/to/file.rdl'],
+  deleteExistingItems: false,
   fixDataSourceReference: false,
-  dataSourceFirst: false,
+  exclude: ['folderName', '.extension', '/path/to/file.rdl'],
+  include: { folders: [], dataSources: [], reports: [] },
   dataSourceOptions: {
     myDataSourceName: {
       ConnectString: 'data source=<server>\<instance>; initial catalog=<dbName>',
