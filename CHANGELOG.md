@@ -1,6 +1,6 @@
 ## Change Log
 
-### v1.3.2 - v1.3.6 - 
+### v1.3.2 - v1.3.7 
 - added `include` array to `uploadFiles`
 - bug fixes to `fixDataSourceReference`, `upload`
 - documentation update
