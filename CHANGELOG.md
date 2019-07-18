@@ -1,5 +1,11 @@
 ## Change Log
 
+### v1.3.6
+- added `include` array to `uploadFiles`
+- bug fixes to `fixDataSourceReference`, `upload`
+- documentation update
+- packages update to latest
+
 ### v1.3.1
 
 - consistent parameters for all start functions `report.start`, `reportService.start` and `reportExecution.start` 
