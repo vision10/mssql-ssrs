@@ -253,6 +253,12 @@ var dataSource = await ssrs.reportService.createDataSource(dataSourceName, folde
 Mostly a above but definition is a `ReportDefinition` object
 ```js
 var report = await ssrs.reportService.createReport(reportName, folderPath, overwrite, definition, description, isHidden)
+- `reportName`: report name
+- `folderPath`: report folder destination
+- `overwrite`: overwrite if already exists
+- `definition`: report definition xml string (will be converted to base64)
+- `description`: report description
+- `isHidden`: report manager property hidden
 ```
 
 ### Delete item
