@@ -1,6 +1,10 @@
 ## Change Log
 
-### v1.3.78
+### v1.4.0 (TODO)
+- drop internal promisify function, use soap Async functions
+- new `createClient` on reportService and reportExecution
+
+### v1.3.8 - v1.3.10
 - bug fix
 
 ### v1.3.2 - v1.3.7 
