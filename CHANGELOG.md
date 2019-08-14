@@ -2,10 +2,13 @@
 
 ### v1.4.0 (TODO)
 - drop internal promisify function, use soap Async functions
-- new `createClient` on reportService and reportExecution
+- new `createClient` on reportService and reportExecution for client with diferent configurations
 
-### v1.3.8 - v1.3.10
+### v1.3.9 - v1.3.11
 - bug fix
+
+### v1.3.8
+- auto convert definition parameter on `createReport` to base64 string
 
 ### v1.3.2 - v1.3.7 
 - added `include` array to `uploadFiles`
