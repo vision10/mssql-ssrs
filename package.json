@@ -1,6 +1,6 @@
 {
   "name": "mssql-ssrs",
-  "version": "1.3.11",
+  "version": "1.3.12",
   "description": "Promise based api for MSSQL Reporting Services with ntlm and basic security",
   "author": "Sorin Muresan <sorinm025@gmail.com>",
   "keywords": [

@@ -4,7 +4,7 @@
 - drop internal promisify function, use soap Async functions
 - new `createClient` on reportService and reportExecution for client with diferent configurations
 
-### v1.3.9 - v1.3.11
+### v1.3.9 - v1.3.12
 - bug fix
 
 ### v1.3.8
