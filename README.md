@@ -65,13 +65,16 @@ Install with [npm](http://github.com/isaacs/npm):
 ## Usage
 
 MSSQL has 2 parts for reporting services:
-- report service for report management
-- report execution for report rendering
+- report service for report management (create, search...)
+- report execution for report rendering (executing report)
+
+To start using reporting services we need to connect to the server first:
+
+start both services (reportService, reportExecution)
 
 ```js
 var ssrs = require('mssql-ssrs');
 
-// start both services (reportService, reportExecution)
 await ssrs.start(url/path/serverConfig, soapConfig [, options] [, security]);
 ```
 
@@ -84,46 +87,55 @@ var re = await ssrs.reportExecution.start(url/Path/serverConfig, soapConfig [, o
 
 #### Url/serverConfig/path
 
-The `url/serverConfig/path` argument accepts a string url, config object or a system file path: 
+The `url/serverConfig/path` argument accepts a string url, config object or a system file path (the file path option must contain a valid ssrs wsdl file from reporting services): 
+
 ```js
 var url = 'http(s)://<serverName>:<port>/ReportServer_<sqlInstance>',
 var serverConfig = {
     server: 'serverName',
     instance: 'serverInstance',
-    isHttps: false, // optional
-    port: '80', // optional
+    isHttps: false, // optional, default: false
+    port: 80, // optional, default: 80
 };
 ```
 
 #### Soap Config
 
-[soap config](https://www.npmjs.com/package/soap#options)
-also includes directly on config or on config.wsdl_options
-- `username`: required
-- `password`: required
-- `workstation`: optional
-- `domain`: optional
+[soap config](https://www.npmjs.com/package/soap#options), also include directly on config object or on config.wsdl_options the folowing properties for ssrs connection:
+- `username`: '', required
+- `password`: '', required
+- `workstation`: '', optional
+- `domain`: '', optional
 
 #### Report Service Options
 
-- `rootFolder`: base folder added to `reportPath` parameters, default '/'
-- `cache`: specify whether to cache report list, by default hidden reports are not kept, default true 
-- `useRs2012`: specify witch version of wsdl should client use (2010/2012), default uses 2010
+- `rootFolder`: base folder added to `reportPath` parameters, default: '/'
+- `useRs2012`: specify witch version of wsdl should client use (2010/2012), default: 2010
+- `cache`: specify whether to cache report list, default true 
+  - by default hidden reports are not kept
 
 #### Security
 
 More information on types of security see [soap security](https://github.com/vpulim/node-soap#security)
-Defaults to ntml
 
-Ex for basic security
+Defaults to NTLM security (no extra steps needed)
+
+- NTLM security
+```js
+    await ssrs.start(url, { username: username, password: password });
+```
+
+- basic security
 ```js
     var config = { username: username, password: password };
     await ssrs.start(url, config, null, 'basic');
+    
     // or
+
     var wsdl_headers = {};
     var security = new ssrs.soap.security.BasicAuthSecurity(config.username, config.password);
-    security.addHeaders(wsdl_headers);
-    //                      for initial client creation      to set security on client
+    security.addHeaders(wsdl_headers); // ads authorization
+
     await ssrs.start(url, { wsdl_headers: wsdl_headers }, null, security);
 ```
 
@@ -131,6 +143,7 @@ Ex for basic security
 
 ### Report service client
 
+- Get the soap instance of reporting services with [all its methods and options](https://docs.microsoft.com/en-us/dotnet/api/reportservice2010.reportingservice2010?view=sqlserver-2016)  
 ```js
 var client = await ssrs.reportService.getClient();
 ```
@@ -179,7 +192,7 @@ DataSourceDefinition: {
 
 ### Get report properties
 
-If properties are given, all report properties are returned
+If properties are given, all report properties are returned.  Report custom properties are not available
 ```js
 var properties = ['Hidden', 'Description'];
 // or
@@ -250,13 +263,13 @@ var dataSource = await ssrs.reportService.createDataSource(dataSourceName, folde
 
 ### Create report
 
-Mostly a above but definition is a `ReportDefinition` object
+Mostly as above but `definition` property is a `ReportDefinition` object
 ```js
 var report = await ssrs.reportService.createReport(reportName, folderPath, overwrite, definition, description, isHidden)
 - `reportName`: report name
 - `folderPath`: report folder destination
 - `overwrite`: overwrite if already exists
-- `definition`: report definition xml string (will be converted to base64)
+- `definition`: report definition xml string (will be automaticaly converted to base64)
 - `description`: report description
 - `isHidden`: report manager property hidden
 ```
@@ -312,6 +325,8 @@ var references = await ssrs.reportService.setItemReferences(itemPath, refs);
     
 ### Get report execution client
 
+- Get the soap instance of reporting services with [all its methods and options](https://docs.microsoft.com/en-us/dotnet/api/reportservice2010.reportingservice2010?view=sqlserver-2016)  
+
 ```js
 var client = await ssrs.reportExecution.getClient()
 ```
@@ -334,19 +349,31 @@ var extensions = await ssrs.reportExecution.listRenderingExtensions()
 var reportPath = '/Folder/ReportName';
 var fileType = 'word';
 var parameters = { 
-  parameterName: 'parameterValue', 
-  parameterName2: false 
+  parameterName1: 1,
+  parameterName2: false,
+  parameterName3: 'parameterValue', 
   multiValue: ['value1', 'value2']
 };
 //or
 var parameters = [
-  { Name: 'parameterName', Value: 'parameterValue' },
-  { Name: 'parameterName2', Value: false }
+  { Name: 'parameterName1', Value: 1 },
+  { Name: 'parameterName2', Value: false },
+  { Name: 'parameterName3', Value: 'parameterValue' },
   { Name: 'multiValue', Value: ['value1', 'value2'] }
 ]
 var report = await ssrs.reportExecution.getReport(reportPath, fileType, parameters)
 ```
 - `parameters` can be an object with name, value atributes or instance of `ReportParameterInfo` objects
+
+report result:
+```js
+  {
+    "Extension": "pdf",
+    "MimeType": "application/pdf",
+    "Result:" "", // base64 string, this is the pdf
+    "StreamIds": null
+  }
+```
 
 ### Run report by url
 

@@ -1,8 +1,14 @@
 ## Change Log
 
-### v1.4.0 (TODO)
-- drop internal promisify function, use soap Async functions
-- new `createClient` on reportService and reportExecution for client with diferent configurations
+### v1.5.0 TODO
+- drop internal promisify function
+- use soap Async functions (returned result will change)
+
+### v1.4.0
+- some documentation updates
+- use soap internal ntlm security
+- update packages (dropped lodash, replace moment=>dayjs)
+- new `createClient` on reportService and reportExecution for multiple clients with diferent configurations
 
 ### v1.3.9 - v1.3.12
 - bug fix
