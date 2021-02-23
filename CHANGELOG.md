@@ -4,9 +4,13 @@
 - drop internal promisify function
 - use soap Async functions (returned result will change)
 
+### v1.4.1
+- update packages
+- new option for upload reports `options` when deleting existing items - `keepDataSource` (default: false)
+
 ### v1.4.0
 - some documentation updates
-- use soap internal ntlm security
+- use `soap ntlm security` (droped internal NtlmSecurity, exported from `soap`)
 - update packages (dropped lodash, replace moment=>dayjs)
 - new `createClient` on reportService and reportExecution for multiple clients with diferent configurations
 
