@@ -1,8 +1,9 @@
 ## Change Log
 
-### v2.0.1 TODO
+### v2.0.2 TODO
 - support for http ntlm 2
-
+### v2.0.1
+- bug fix
 ### v2.0.0
 - update packages (soap v40+ dropped request and httpntlm in favour of axios and axios-ntlm)
 - drop internal promisify function, using soap async functions (returned result may change)

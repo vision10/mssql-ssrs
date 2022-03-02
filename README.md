@@ -1,4 +1,5 @@
 
+[![npm version](https://badge.fury.io/js/mssql-ssrs.svg)](https://badge.fury.io/js/mssql-ssrs)
 # mssql-ssrs
 
 > Promise based api for MSSQL reporting services
