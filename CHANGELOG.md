@@ -1,8 +1,9 @@
 ## Change Log
 
-### v2.0.2 TODO
+### v2.1.0 TODO
 - support for http ntlm 2
-### v2.0.1
+### v2.0.1-v2.0.2
+- packages bump
 - bug fix
 ### v2.0.0
 - update packages (soap v40+ dropped request and httpntlm in favour of axios and axios-ntlm)
