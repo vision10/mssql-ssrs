@@ -2,7 +2,7 @@
 
 ### v2.1.0 TODO
 - support for http ntlm 2
-### v2.0.1-v2.0.3
+### v2.0.1-v2.0.4
 - packages bump
 - bug fix
 ### v2.0.0
