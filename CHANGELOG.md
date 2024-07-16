@@ -1,8 +1,8 @@
 ## Change Log
 
-### v2.3.0 TODO
+### v2.4.0 TODO
 - support for http ntlm 2
-### v2.2.0
+### v2.3.0
 - package updated to latest
 ### v2.1.0
 - replace encodeURI with encodeURIComponent for getReport by url 
