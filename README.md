@@ -139,22 +139,34 @@ var serverConfig = {
 
 More information on types of security see [soap security](https://github.com/vpulim/node-soap#security)
 
-Defaults to NTLM security (no extra steps needed)
+Defaults to NTLM security so no extra steps needed, just start
 
-- NTLM security
+- NTLM security, more details here [Usage](#usage)
 ```js
+    // ex:
     await ssrs.start(url, { username: username, password: password });
+    
+    // start everything
+    await ssrs.start(url/Path/serverConfig, soapConfig [, options] [, security]);
+    // or start separately
+    var rs = new ReportService();
+    await rs.start(url/Path/serverConfig, soapConfig [, options] [, security]);
+    var re = new ReportExecution();
+    await re.start(url/Path/serverConfig, soapConfig [, options] [, security]);
 ```
 
-- basic security
+- basic security and others
 ```js
-    var config = { username: username, password: password };
-    await ssrs.start(url, config, null, 'basic');
+    // added in the same way for any other security type you use
+    // instanciating security type can differ
+
+    var auth = { username: username, password: password };
+    await ssrs.start(url, auth, null, 'basic');
     
     // or
 
     var wsdl_headers = {};
-    var security = new ssrs.soap.security.BasicAuthSecurity(config.username, config.password);
+    var security = new ssrs.soap.security.BasicAuthSecurity(auth.username, auth.password);
     security.addHeaders(wsdl_headers); // add authorization
 
     await ssrs.start(url, { wsdl_headers: wsdl_headers }, null, security);
