@@ -406,7 +406,7 @@ var extensions = await reportExecution.listRenderingExtensions()
 
 ```js
 var reportPath = '/Folder/ReportName';
-var fileType = 'word';
+var fileType = 'pdf';
 var parameters = { 
   parameterName1: 1,
   parameterName2: false,
@@ -423,6 +423,7 @@ var parameters = [
 var report = await reportExecution.getReport(reportPath, fileType, parameters)
 ```
 - `parameters` can be an object with name, value atributes or instance of `ReportParameterInfo` objects
+**NOTE**: HTML render will automatically get associated image streams from the report server in base64 inside the html
 
 report result:
 ```js

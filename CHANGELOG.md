@@ -1,7 +1,8 @@
 ## Change Log
 
-### v2.4.0 TODO
-- support for http ntlm 2
+### v2.4.0
+- HTML render will automatically get associated image streams in base64 inside the html
+- packages bump
 ### v2.3.0
 - package updated to latest
 ### v2.1.0
