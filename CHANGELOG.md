@@ -1,5 +1,8 @@
 ## Change Log
 
+### v2.4.1
+- bugfix `uploadFiles` - reading files with multiple directories
+- packages bump
 ### v2.4.0
 - HTML render will automatically get associated image streams in base64 inside the html
 - packages bump

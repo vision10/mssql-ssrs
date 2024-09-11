@@ -1,6 +1,6 @@
 {
   "name": "mssql-ssrs",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Promise based api for MSSQL Reporting Services with ntlm and basic security",
   "author": "Sorin Muresan <sorinm025@gmail.com>",
   "keywords": [
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "axios-ntlm": "^1.4.2",
-    "dayjs": "^1.11.12",
-    "soap": "^1.1.1"
+    "dayjs": "^1.11.13",
+    "soap": "^1.1.3"
   }
 }
