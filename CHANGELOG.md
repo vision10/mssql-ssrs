@@ -1,6 +1,6 @@
 ## Change Log
 
-### v2.4.2-v2.4.4
+### v2.4.2-v2.4.6
 - packages bump
 ### v2.4.1
 - bugfix `uploadFiles` - reading files with multiple directories
