@@ -1,6 +1,6 @@
 ## Change Log
 
-### v2.4.9
+### v2.4.9-v2.4.10
 - packages bump
 ### v2.4.8
 - `ReportExecutionUrl.getReport` fix parameters Request-URI Too Long
