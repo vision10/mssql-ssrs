@@ -29,6 +29,6 @@
   "dependencies": {
     "axios-ntlm": "^1.4.6",
     "dayjs": "^1.11.21",
-    "soap": "^1.9.3"
+    "soap": "^1.10.0"
   }
 }
